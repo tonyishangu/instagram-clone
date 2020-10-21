@@ -14,6 +14,7 @@ urlpatterns=[
     url('^like/(\d+)',views.likePost,name= 'likePost'),
 	url('^follow/(\d+)',views.follow,name="user_follow"),
 	url('^editPost/(\d+)',views.editPost,name="editPost"),
+    url('^accounts/login', views.login, name='login'),
 
 ]
 if settings.DEBUG:
