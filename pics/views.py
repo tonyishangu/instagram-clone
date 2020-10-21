@@ -1,11 +1,14 @@
 from django.shortcuts import render,redirect
 from django.http  import HttpResponse,Http404,HttpResponseRedirect,JsonResponse
-from .forms import NewImagePost,CreateComment,UpdateProfile,SignUpForm
+from .forms import NewImagePost,CreateComment,UpdateProfile
 from .models import Image,Comment,Profile,User,Follow
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth import logout as django_logout
+from .models import *
+from .forms import *
 
 
 # Create your views here.
@@ -26,7 +29,7 @@ def timeline(request):
 	return render(request, 'accounts/timeline.html',{"images":images,"title":title})
 
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def profile(request,prof_id):
 	'''
 	Method that fetches a users profile page
@@ -48,7 +51,7 @@ def profile(request,prof_id):
 	return render(request,'accounts/profile.html',{"images":images,"profile":profile,"title":title,"is_follow":is_follow,"followers":followers,"following":following})
 	
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def create(request):
 	'''
 	Method that created an image post
@@ -70,7 +73,7 @@ def create(request):
 
 	return render(request,'accounts/create_post.html',{"form":form,"title":title})
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def updateProfile(request):
 	'''
 	Method that updates a user's profile.
@@ -96,7 +99,7 @@ def updateProfile(request):
 
 	return render(request,'accounts/update_profile.html',{"form":form,"title":title})
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def single(request,image_id):
 	'''
 	Method that fetches a single post view.
@@ -122,7 +125,7 @@ def single(request,image_id):
 	comments = Comment.objects.filter(image = image_id)
 	return render(request,'accounts/single.html',{"image":image,"comments":comments,"form":form,"title":title,"is_liked":is_liked})
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def search(request):
 	'''
 	Method that searches for users based on their profiles
@@ -137,7 +140,7 @@ def search(request):
 		message = "You haven't searched for any item"
 		return render(request,'accounts/search.html',{"message":message})
 
-@login_required(login_url='/accounts/login/')
+@login_required
 def likePost(request,image_id):
 	'''
 	Method that likes a post.
@@ -204,3 +207,17 @@ def editPost(request,image_id):
 
 	return render(request,'accounts/edit_post.html',{"form":form,"title":title,"image":image})
 	
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return redirect(request,'/')
+    
+    return render(request, '/django_registration/login.html')
+        
+@login_required
+def logout(request):
+    django_logout(request)
+    return  HttpResponseRedirect('/')

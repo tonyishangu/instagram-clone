@@ -20,9 +20,9 @@ from django.contrib.auth import views
 from django_registration.backends.one_step.views import RegistrationView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('pics.urls')),
-    path('accounts/', include('django_registration.backends.one_step.urls')),
-    path('tinymce/', include('tinymce.urls')),
-    path('logout/', views.LogoutView, {"next_page": '/'}),
+    url('^admin/', admin.site.urls),
+    url('^',include('pics.urls')),
+    url('^accounts/', include('django_registration.backends.one_step.urls')),
+    url('^tinymce/', include('tinymce.urls')),
+    url('^logout/$', views.LogoutView, {"next_page": '/'}),
 ]
