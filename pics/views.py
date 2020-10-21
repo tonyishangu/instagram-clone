@@ -215,7 +215,7 @@ def login(request):
         login(request, user)
         return redirect(request,'/')
     
-    return render(request, '/django_registration/login.html')
+    return render(request, '/registration/login.html')
         
 @login_required
 def logout(request):

@@ -24,5 +24,6 @@ urlpatterns = [
     url('^',include('pics.urls')),
     url('^accounts/', include('django_registration.backends.one_step.urls')),
     url('^tinymce/', include('tinymce.urls')),
+    url('^accounts/', include('django.contrib.auth.urls')),
     url('^logout/$', views.LogoutView, {"next_page": '/'}),
 ]
