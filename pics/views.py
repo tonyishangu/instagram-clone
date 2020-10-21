@@ -1,9 +1,11 @@
 from django.shortcuts import render,redirect
 from django.http  import HttpResponse,Http404,HttpResponseRedirect,JsonResponse
-from .forms import NewImagePost,CreateComment,UpdateProfile
+from .forms import NewImagePost,CreateComment,UpdateProfile,SignUpForm
 from .models import Image,Comment,Profile,User,Follow
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 
 # Create your views here.

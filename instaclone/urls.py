@@ -15,14 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include,path
 from django.contrib.auth import views
 from django_registration.backends.one_step.views import RegistrationView
 
 urlpatterns = [
-    url('^admin/', admin.site.urls),
-    url('^',include('pics.urls')),
-    url('^accounts/', include('django_registration.backends.activation.urls')),
-    url('^tinymce/', include('tinymce.urls')),
-    url('^logout', views.LogoutView, {"next_page": '/'}),
+    path('admin/', admin.site.urls),
+    path('',include('pics.urls')),
+    path('accounts/', include('django_registration.backends.one_step.urls')),
+    path('tinymce/', include('tinymce.urls')),
+    path('logout/', views.LogoutView, {"next_page": '/'}),
 ]
