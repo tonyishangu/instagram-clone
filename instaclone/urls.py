@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import include,path
 from django.contrib.auth import views
 from django_registration.backends.one_step.views import RegistrationView
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     url('^admin/', admin.site.urls),
@@ -25,5 +27,6 @@ urlpatterns = [
     url('^accounts/', include('django_registration.backends.one_step.urls')),
     url('^tinymce/', include('tinymce.urls')),
     url('^accounts/', include('django.contrib.auth.urls')),
-    url('^logout/$', views.LogoutView, {"next_page": '/'}),
+    url('^logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
+    #url('^logout/$', views.LogoutView, {"next_page": '/'}),
 ]

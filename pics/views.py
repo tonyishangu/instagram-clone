@@ -12,6 +12,7 @@ from .forms import *
 
 
 # Create your views here.
+@login_required
 def index(request):
 	'''
 	Method that fetches all images from all users.
